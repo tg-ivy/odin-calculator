@@ -19,22 +19,23 @@ function div (a, b) {
 let numOne = '';
 let numTwo;
 let operator;
+let resultSwitch = false;
 
 
 // Function of operation
 
 function operate(a, b, op) {
     if (op == '+') {
-        return add(a, b)
+        return add(b, a)
     };
     if (op == '-') {
-        return sub(a, b)
+        return sub(b, a)
     };
     if (op == '*') {
-        return mlt(a, b)
+        return mlt(b, a)
     };
     if (op == '/') {
-        return div(a, b)
+        return div(b, a)
     };    
 };
 
@@ -42,7 +43,7 @@ function operate(a, b, op) {
 
 //display
 const displayValue = document.getElementsByClassName("display");
-
+const resultBoxValue = document.getElementById("resultbox");
 displayValue[0].addEventListener("click", () => {
     console.log('Hi William. Stalking my github are you? It really is not anything special you know. You have chicken legs by the way.')
 });
@@ -56,6 +57,7 @@ const btnEquals = document.getElementById("equals");
 const btnClear = document.getElementById("clear");
 
 // Number buttons
+const allNumBtns = document.getElementsByClassName("numbutton");
 const btnOne = document.getElementById("one");
 const btnTwo = document.getElementById("two");
 const btnThree = document.getElementById("three");
@@ -69,43 +71,52 @@ const btnZero = document.getElementById("zero");
 
 //----------Event Listeners for Number Buttons---------
 btnOne.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '1';
     numOne += '1';
-    console.log(numOne)
 });
 btnTwo.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '2';
     numOne += '2';
 });
 btnThree.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '3';
     numOne += '3';
 });
 btnFour.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '4';
     numOne += '4';
 });
 btnFive.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '5';
     numOne += '5';
 });
 btnSix.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '6';
     numOne += '6';
 });
 btnSeven.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '7';
     numOne += '7';
 });
 btnEight.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '8';
     numOne += '8';
 });
 btnNine.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '9';
     numOne += '9';
 });
 btnZero.addEventListener("click", () => {
+    checkSwitch();
     displayValue[0].textContent += '0';
     numOne += '0';
 });
@@ -114,21 +125,103 @@ btnZero.addEventListener("click", () => {
 
 
 btnAdd.addEventListener("click", () => {
-    displayValue[0].textContent += '+'
+    displayValue[0].textContent += '+';
     if (!numTwo) {
         numTwo = numOne
         numOne = '';
         operator = '+';
     }
     else if (numTwo) {
-        let result = operate(parseInt(numOne, 10), parseInt(numTwo, 10), operator);
+        let result = operate(parseFloat(numOne, 10), parseFloat(numTwo, 10), operator);
         numTwo = result;
-        operator = '+'
+        numOne = '';
+        operator = '+';
     }
+    resultSwitch = false;
 })
 
-btnEquals.addEventListener("click", () => {
-    let result = operate(parseInt(numOne, 10), parseInt(numTwo, 10), operator);
-    displayValue[0].textContent = result;
+btnSub.addEventListener("click", () => {
+    displayValue[0].textContent += '-';
+    if (!numTwo) {
+        numTwo = numOne
+        numOne = '';
+        operator = '-';
+    }
+    else if (numTwo) {
+        let result = operate(parseFloat(numOne, 10), parseFloat(numTwo, 10), operator);
+        numTwo = result;
+        numOne = '';
+        operator = '-';
+    }
+    resultSwitch = false;
 })
-// ----Function for checking Operators in the display----
+
+btnMlt.addEventListener("click", () => {
+    displayValue[0].textContent += 'x';
+    if (!numTwo) {
+        numTwo = numOne
+        numOne = '';
+        operator = '*';
+    }
+    else if (numTwo) {
+        let result = operate(parseFloat(numOne, 10), parseFloat(numTwo, 10), operator);
+        numTwo = result;
+        numOne = '';
+        operator = '*';
+    }
+    resultSwitch = false;
+})
+
+btnDvd.addEventListener("click", () => {
+    displayValue[0].textContent += '÷';
+    if (!numTwo) {
+        numTwo = numOne
+        numOne = '';
+        operator = '/';
+    }
+    else if (numTwo) {
+        let result = operate(parseFloat(numOne, 10), parseFloat(numTwo, 10), operator);
+        numTwo = result;
+        numOne = '';
+        operator = '/';
+    }
+    resultSwitch = false;
+})
+
+// Equals
+btnEquals.addEventListener("click", () => {
+    let result = operate(parseFloat(numOne, 10), parseFloat(numTwo, 10), operator);
+    if (result === Infinity) {
+        resultBoxValue.textContent = 'ERROR: Cannot divide by 0'
+    }
+    else if (result == NaN) {
+        resultBoxValue.textContent = 'ERROR: Please enter a valid equation'
+    }
+    else {
+        resultBoxValue.textContent = result;
+    };
+    displayValue[0].textContent = '';
+    resultSwitch = true;
+});
+
+// Clear
+btnClear.addEventListener("click", clear)
+
+// ---------Function to clear and check switch-------------
+
+function clear() {
+    resultBoxValue.textContent = '';
+    displayValue[0].textContent = '';
+    numOne = '';
+    numTwo = undefined;
+    operator = undefined;
+    resultSwitch = false;
+}
+
+function checkSwitch() {
+    if (resultSwitch == true) {
+        resultSwitch = false;
+        clear();
+    }
+    else return
+}

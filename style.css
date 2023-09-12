@@ -1,19 +1,29 @@
 .supercontainer {
     display: flex;
     justify-content: center;
+    
 }
 
 .container {
     border: 1px solid black;
     padding: 20px;
     width: 440px;
-
+    background-color: rgb(175, 255, 255);
 }
 
 .display {
-    height: 100px;
+    height: 30px;
     border: 1px solid black;
-    margin-bottom: 30px;
+    border-bottom: 0px;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+}
+.numbutton {
+    background-color: white;
+}
+
+.opbutton {
+    background-color: lightblue;
 }
 
 .opbutton, .numbutton {
@@ -32,4 +42,16 @@
     width: 240px;
     justify-content: center;
     padding-left: 0px;
+}
+
+#resultbox {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    height: 40px;
+    border: 1px solid black;
+    border-top: 0px;
+    margin-bottom: 30px;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
 }
